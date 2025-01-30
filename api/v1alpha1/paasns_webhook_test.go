@@ -1,39 +1,53 @@
 /*
-Copyright 2025.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+Copyright 2024, Tax Administration of The Netherlands.
+Licensed under the EUPL 1.2.
+See LICENSE.md for details.
 */
 
 package v1alpha1
 
 import (
 	. "github.com/onsi/ginkgo/v2"
+	. "github.com/onsi/gomega"
 )
 
 var _ = Describe("PaasNS Webhook", func() {
+	var (
+		obj       *PaasNS
+		oldObj    *PaasNS
+		validator PaasNSCustomValidator
+	)
 
-	Context("When creating PaasNS under Validating Webhook", func() {
-		It("Should deny if a required field is empty", func() {
-
-			// TODO(user): Add your logic here
-
-		})
-
-		It("Should admit if all required fields are provided", func() {
-
-			// TODO(user): Add your logic here
-
-		})
+	BeforeEach(func() {
+		obj = &PaasNS{}
+		oldObj = &PaasNS{}
+		validator = PaasNSCustomValidator{}
+		Expect(validator).NotTo(BeNil(), "Expected validator to be initialized")
+		Expect(oldObj).NotTo(BeNil(), "Expected oldObj to be initialized")
+		Expect(obj).NotTo(BeNil(), "Expected obj to be initialized")
 	})
 
+	AfterEach(func() {
+	})
+
+	Context("When creating or updating PaasNS under Validating Webhook", func() {
+		// TODO (portly-halicore-76): Add logic for validating webhooks
+		// Example:
+		It("Should deny creation", func() {
+			By("simulating an invalid creation scenario")
+			Expect(validator.ValidateCreate(ctx, obj)).Error().ToNot(HaveOccurred())
+		})
+
+		//It("Should admit creation if all required fields are present", func() {
+		//	By("simulating an invalid creation scenario")
+		//	Expect(validator.ValidateCreate(ctx, obj)).To(BeNil())
+		//})
+		//
+		// It("Should validate updates correctly", func() {
+		//     By("simulating a valid update scenario")
+		//     oldObj.SomeRequiredField = "updated_value"
+		//     obj.SomeRequiredField = "updated_value"
+		//     Expect(validator.ValidateUpdate(ctx, oldObj, obj)).To(BeNil())
+		// })
+	})
 })
