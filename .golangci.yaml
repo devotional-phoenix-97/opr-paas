@@ -1,41 +1,49 @@
+run:
+  timeout: 5m
+  allow-parallel-runners: true
+
 issues:
-  exclude:
-    - SA1019
-    - SA5011
-  max-issues-per-linter: 0
-  max-same-issues: 0
+  # don't skip warning about doc comments
+  # don't exclude the default set of lint
+  exclude-use-default: false
+  # restore some of the defaults
+  # (fill in the rest as needed)
+  exclude-rules:
+    - path: 'api/*'
+      linters:
+        - lll
+    - path: 'internal/*'
+      linters:
+        - dupl
+        - lll
 linters:
+  disable-all: true
   enable:
+    - dupl
     - errcheck
-    - errorlint
+    # WARN The linter 'exportloopref' is deprecated (since v1.60.2) due to: Since Go1.22 (loopvar) this linter is no longer relevant. Replaced by copyloopvar.
+    # ERRO [linters_context] exportloopref: This linter is fully inactivated: it will not produce any reports.
+    #- exportloopref
     - ginkgolinter
-    - gocritic
-    - gofumpt
+    - goconst
+    - gocyclo
+    - gofmt
     - goimports
-    - gosec
     - gosimple
     - govet
     - ineffassign
+    - lll
     - misspell
+    - nakedret
+    - prealloc
+    - revive
     - staticcheck
-    - testifylint
+    - typecheck
+    - unconvert
+    - unparam
     - unused
-    - whitespace
+
 linters-settings:
-  gocritic:
-    disabled-checks:
-      - appendAssign
-      - assignOp # Keep it disabled for readability
-      - badCond
-      - commentFormatting
-      - exitAfterDefer
-      - ifElseChain
-      - mapKey
-      - singleCaseSwitch
-      - typeSwitchVar
-  testifylint:
-    enable-all: true
-    disable:
-      - go-require
-run:
-  timeout: 50m
+  revive:
+    rules:
+      - name: comment-spacings
