@@ -2,6 +2,7 @@ package fields
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 
 	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
@@ -25,7 +26,13 @@ func (en Entries) Merge(added Entries) Entries {
 
 func (en Entries) String() string {
 	var l []string
-	for key, value := range en {
+	keys := make([]string, 0, len(en))
+	for k := range en {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	for _, key := range keys {
+		value := en[key]
 		l = append(l, fmt.Sprintf("'%s': %s", key, value.String()))
 	}
 	return fmt.Sprintf("{ %s }", strings.Join(l, ", "))

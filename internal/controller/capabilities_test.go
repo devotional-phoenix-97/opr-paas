@@ -218,7 +218,7 @@ var _ = Describe("Capabilities controller", Ordered, func() {
 						"git_path":      "",
 						"git_revision":  "",
 						"git_url":       "",
-						"groups":        "",
+						"groups":        "map[ldapgroup:map[query:CN=group1OU=example roles:[admin]] usergroup:map[query: roles:[edit view] users:[user1 user2]]]",
 						"paas":          paasName,
 						"requestor":     "my",
 						"service":       serviceName,
